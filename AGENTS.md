@@ -202,6 +202,36 @@ Per `acorn_to_oak_second_prompt.md`, all of the following are now **done**:
   not version-controlled" above), including a full history purge.
 - README.md and this file brought up to date.
 
+## Changelog: live booking integration (2026-09-08)
+
+`#booking` now embeds the client's live forestschool.app booking flow
+(`https://forestschool.app/book/acorn-to-oak`) via `<iframe>`, with an
+"Open booking in a new tab" link and a `mailto:` fallback, replacing the
+old "opens soon" placeholder.
+
+**This is an unofficial, undocumented integration** — forestschool.app has
+no public developer docs, API, or embed guide (checked `/features`,
+`/help`, `/guides`, `/forest-school-booking-system`; nothing there). The
+iframe approach is only justified because the booking page's own response
+headers send `content-security-policy: frame-ancestors *` (checked
+2026-09-08 via `curl -I`), i.e. they explicitly allow being framed from any
+origin. `<object>` was considered and rejected — wrong tool for embedding
+a full interactive HTML app (meant for PDFs/plugins, no `title`/`loading`
+equivalent, weaker accessibility).
+
+Known risk, not yet fully verified: the booking flow's later steps handle
+payment, and payment providers commonly refuse to render inside an iframe
+for security reasons regardless of forestschool.app's own CSP. If a client
+or family reports the booking flow breaking partway through (especially at
+a payment step), that's the likely cause — the "open in a new tab" link
+next to the iframe is the deliberate escape hatch for that case, not just
+decoration.
+
+If the client signs into their forestschool.app account and finds real
+embed/developer documentation, revisit this section against it — there may
+be an officially supported method (e.g. a resize-aware JS snippet) better
+than a bare iframe.
+
 ## Outstanding work
 
 Still genuinely open (not part of the second-prompt brief):
@@ -234,8 +264,6 @@ Still genuinely open (not part of the second-prompt brief):
   soon)" from the `aria-label`s at that point.
 - Confirmed safety/insurance/qualifications wording (`#safety` section,
   currently generic placeholder, flagged on-page)
-- Live booking system link once procured (currently `mailto:`/`tel:` CTA,
-  marked with an HTML comment in `index.html`)
 - Deploy to the client's Namecheap host — the local `./deploy` script (see
   "The `deploy` script" above) now automates the rebuild + upload, but it
   still requires the user's own SSH authentication to actually run; do not

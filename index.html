@@ -495,21 +495,29 @@
 
     <!-- ============ BOOKING ============ -->
     <section id="booking" aria-labelledby="booking-heading" class="bg-forest-700 py-20 sm:py-28">
-      <div class="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
         <img src="assets/images/logo/logo-badge-brown.webp" alt="Acorn to Oak logo" class="mx-auto h-20 w-auto" />
 
-        <h2 id="booking-heading" class="mt-6 font-display text-3xl font-semibold text-cream-50 sm:text-4xl">Booking opens soon</h2>
+        <h2 id="booking-heading" class="mt-6 font-display text-3xl font-semibold text-cream-50 sm:text-4xl">Book your child's place</h2>
         <p class="mt-5 text-base leading-relaxed text-cream-100">
-          We're just finalising our booking system and will send a link in the coming days so you can secure your child's place. In the meantime, please don't hesitate to get in touch with any questions — we can't wait to welcome your family to the woods.
+          Choose your sessions and secure your child's place below. If you'd rather not book online, just get in touch and we'll sort it out together.
         </p>
 
-        <!-- TODO: replace the CTA below with the live booking system link once procured -->
-        <div class="mt-8 flex flex-wrap justify-center gap-4">
-          <a href="mailto:hello@acorn-to-oak.co.uk?subject=Booking%20enquiry" class="inline-flex items-center gap-2 rounded-full bg-cream-50 px-6 py-3 text-sm font-medium text-forest-800 transition-colors hover:bg-mustard-400">
-            Get in touch to reserve your place
+        <div class="mt-8 overflow-hidden rounded-2xl bg-cream-50 shadow-sm">
+          <iframe
+            src="https://forestschool.app/book/acorn-to-oak"
+            title="Book a session with Acorn to Oak Forest School"
+            loading="lazy"
+            class="h-[92vh] min-h-[850px] w-full"
+          ></iframe>
+        </div>
+
+        <div class="mt-6 flex flex-wrap justify-center gap-4">
+          <a href="https://forestschool.app/book/acorn-to-oak" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full bg-cream-50 px-6 py-3 text-sm font-medium text-forest-800 transition-colors hover:bg-mustard-400">
+            Open booking in a new tab ↗
           </a>
-          <a href="tel:07878986641" class="inline-flex items-center gap-2 rounded-full border border-cream-100 px-6 py-3 text-sm font-medium text-cream-50 transition-colors hover:bg-cream-50 hover:text-forest-800">
-            Call 07878 986641
+          <a href="mailto:hello@acorn-to-oak.co.uk?subject=Booking%20enquiry" class="inline-flex items-center gap-2 rounded-full border border-cream-100 px-6 py-3 text-sm font-medium text-cream-50 transition-colors hover:bg-cream-50 hover:text-forest-800">
+            Email hello@acorn-to-oak.co.uk
           </a>
         </div>
       </div>
