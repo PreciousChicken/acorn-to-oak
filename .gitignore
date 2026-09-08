@@ -3,13 +3,15 @@ node_modules/
 
 # Build output
 assets/css
-assets/images
+assets/images/*
+!assets/images/logo
+!assets/images/favicon
 
 # Documentation
 docs/
 
 # Media (images, videos, etc)
-images/
+/images/
 
 # OS and editor files
 .DS_Store
