@@ -6,6 +6,7 @@ src/node_modules/
 dist/
 build/
 output/
+assets/
 
 # Documentation
 docs/
@@ -20,8 +21,6 @@ images/
 *.swp
 *.swo
 *~
-.vscode/
-.idea/
 
 # Logs
 *.log
