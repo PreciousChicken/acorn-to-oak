@@ -123,13 +123,14 @@ This is a whitelist, not a blacklist — new dev-only files (scratch notes,
 tooling config, sample content) never leak to the server by accident, because
 nothing gets deployed unless it's named here.
 
+A gitignored `deploy` script at the repo root wraps this into one command
+(`./deploy`, or `./deploy --dry-run` to preview). It rebuilds
+`assets/css/site.min.css` via `nix-shell` and then rsyncs the same
+whitelist above to the client's host over SSH on a non-standard port, with
+`--delete` (excluding `cgi-bin/`, `.htaccess`, `.well-known/` so
+cPanel/SSL-managed paths are never touched). The script isn't checked into
+git — recreate it locally from the template in `AGENTS.md` with the
+client's real host/user/port/path if you don't already have a copy.
+
 The exact host and remote path are the client's own hosting details and are
 deliberately not recorded in this repo — ask whoever is running the deploy.
-
-## Outstanding before fully live
-
-- Real Instagram/Facebook links (currently placeholders pointing to `#`)
-- Confirmed safety/insurance/qualifications wording (currently generic
-  placeholder, flagged on-page in `#safety`)
-- Live booking system link once procured (currently a `mailto:`/`tel:` CTA,
-  marked with an HTML comment in `index.html`)

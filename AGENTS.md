@@ -139,8 +139,46 @@ Whitelist, not blacklist: only `index.html`, `assets/`, `robots.txt`,
 `sitemap.xml`, `LICENSE-CODE`, `LICENSE-CONTENT` are uploaded — see the
 `rsync` command in `README.md`. Everything else in the repo (tooling,
 source material, docs, briefing files) is dev-only by default and never
-deployed unless added to that list — keep this note and that command in
-sync if the deploy payload changes.
+deployed unless added to that list — keep this note, that command, and the
+local `deploy` script (below) in sync if the deploy payload changes.
+
+### The `deploy` script
+
+A gitignored `deploy` executable at the repo root (not in git — see
+`.gitignore`) holds the client's real host/user/port/path and runs the
+actual deploy: rebuilds CSS via `nix-shell`, then `rsync`s the whitelist
+above over SSH with `--delete`, excluding `cgi-bin/`, `.htaccess`, and
+`.well-known/` so cPanel- and SSL-managed paths on the server are never
+touched. `./deploy --dry-run` previews (including anything `--delete`
+would remove) without transferring. If a fresh clone doesn't have a copy,
+recreate it from this template with the real connection details (ask
+whoever runs the deploy for those — don't guess or invent them):
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
+REMOTE_USER="___"
+REMOTE_HOST="___"
+REMOTE_PORT="___"
+REMOTE_PATH="~/public_html/"
+
+echo "Rebuilding CSS..."
+nix-shell --run "npm run build:css"
+
+RSYNC_FLAGS=(-avz --delete
+  --exclude=cgi-bin --exclude=.htaccess --exclude=.well-known
+  -e "ssh -p ${REMOTE_PORT}")
+[[ "${1:-}" == "--dry-run" ]] && RSYNC_FLAGS+=(--dry-run)
+
+echo "Deploying to ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH} ..."
+rsync "${RSYNC_FLAGS[@]}" \
+  index.html assets robots.txt sitemap.xml LICENSE-CODE LICENSE-CONTENT \
+  "${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}"
+
+echo "Deploy complete."
+```
 
 A temporary hidden demo was previously deployed to
 `https://www.preciouschicken.com/acorntooak/` for client review (separate
@@ -198,15 +236,19 @@ Still genuinely open (not part of the second-prompt brief):
   currently generic placeholder, flagged on-page)
 - Live booking system link once procured (currently `mailto:`/`tel:` CTA,
   marked with an HTML comment in `index.html`)
-- Deploy to the client's Namecheap host — requires the user's own SSH
-  authentication; do not attempt without them present. The exact remote
-  path is deliberately not documented in this repo (client instruction).
+- Deploy to the client's Namecheap host — the local `./deploy` script (see
+  "The `deploy` script" above) now automates the rebuild + upload, but it
+  still requires the user's own SSH authentication to actually run; do not
+  invoke it without them present. The exact remote path is deliberately
+  not documented in this repo (client instruction).
 
 ## Working conventions learned this project
 
 - Ask before running anything that touches the client's live server or
   requires credentials the agent doesn't have — SSH/password-authenticated
-  actions must be run by the user themselves, not the agent.
+  actions must be run by the user themselves, not the agent. This still
+  applies now that a local `./deploy` script exists (see "The `deploy`
+  script" above) — never invoke it unprompted.
 - The user reviews visual changes by reloading the page themselves; don't
   assume a screenshot substitutes for their own look unless asked.
 - Footer/legal links have been hand-edited by the user directly (e.g.
