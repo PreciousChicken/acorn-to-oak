@@ -1,0 +1,16 @@
+{
+  "name": "acorn-to-oak-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Dev tooling for the Acorn to Oak Forest School brochure site. This package.json and its dependencies are build-only and are not part of the deployed static site.",
+  "scripts": {
+    "build:css": "tailwindcss -i ./input.css -o ./assets/css/site.min.css --minify",
+    "watch:css": "tailwindcss -i ./input.css -o ./assets/css/site.min.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.0",
+    "tailwindcss": "^4.1.0",
+    "@fontsource/fraunces": "^5.0.0",
+    "@fontsource/work-sans": "^5.0.0"
+  }
+}

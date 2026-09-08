@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+@theme {
+  /* Deep forest green — primary brand color */
+  --color-forest-50: #eef3ee;
+  --color-forest-100: #d6e3d6;
+  --color-forest-200: #adc7ad;
+  --color-forest-300: #82a882;
+  --color-forest-400: #5c8a5c;
+  --color-forest-500: #3f6b40;
+  --color-forest-600: #2f4f3a;
+  --color-forest-700: #263f2f;
+  --color-forest-800: #1c2f23;
+  --color-forest-900: #14211a;
+
+  /* Warm cream/off-white background */
+  --color-cream-50: #fefdfb;
+  --color-cream-100: #faf6ec;
+  --color-cream-200: #f3ecd9;
+
+  /* Terracotta/rust accent — large text, icons, buttons only */
+  --color-rust-400: #d17f4f;
+  --color-rust-500: #bc5b39;
+  --color-rust-600: #9c4629;
+
+  /* Mustard — secondary autumn accent, used sparingly */
+  --color-mustard-400: #e0ab4d;
+  --color-mustard-500: #d9a441;
+
+  /* Body text ink — warm near-black, not pure black */
+  --color-ink-900: #2b2620;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Work Sans", "Segoe UI", sans-serif;
+}
+
+@font-face {
+  font-family: "Fraunces";
+  src: url("../fonts/fraunces/fraunces-latin-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fraunces";
+  src: url("../fonts/fraunces/fraunces-latin-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fraunces";
+  src: url("../fonts/fraunces/fraunces-latin-500-italic.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fraunces";
+  src: url("../fonts/fraunces/fraunces-latin-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fraunces";
+  src: url("../fonts/fraunces/fraunces-latin-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Work Sans";
+  src: url("../fonts/work-sans/work-sans-latin-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Work Sans";
+  src: url("../fonts/work-sans/work-sans-latin-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Work Sans";
+  src: url("../fonts/work-sans/work-sans-latin-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-cream-100 text-ink-900 font-body antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-forest-700;
+  }
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.acorn-to-oak.co.uk/sitemap.xml
