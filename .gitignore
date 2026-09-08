@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+src/node_modules/
+
+# Build output
+dist/
+build/
+output/
+
+# Documentation
+docs/
+
+# Media (images, videos, etc)
+images/
+
+# OS and editor files
+.DS_Store
+.env
+.env.local
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
