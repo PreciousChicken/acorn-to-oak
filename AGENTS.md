@@ -205,32 +205,22 @@ Per `acorn_to_oak_second_prompt.md`, all of the following are now **done**:
 ## Changelog: live booking integration (2026-09-08)
 
 `#booking` now embeds the client's live forestschool.app booking flow
-(`https://forestschool.app/book/acorn-to-oak`) via `<iframe>`, with an
-"Open booking in a new tab" link and a `mailto:` fallback, replacing the
+(`https://forestschool.app/book/acorn-to-oak?embed=1`) via `<iframe>`, with
+an "Open booking in a new tab" link and a `mailto:` fallback, replacing the
 old "opens soon" placeholder.
 
-**This is an unofficial, undocumented integration** — forestschool.app has
-no public developer docs, API, or embed guide (checked `/features`,
-`/help`, `/guides`, `/forest-school-booking-system`; nothing there). The
-iframe approach is only justified because the booking page's own response
-headers send `content-security-policy: frame-ancestors *` (checked
-2026-09-08 via `curl -I`), i.e. they explicitly allow being framed from any
-origin. `<object>` was considered and rejected — wrong tool for embedding
-a full interactive HTML app (meant for PDFs/plugins, no `title`/`loading`
+The `?embed=1` query param is forestschool.app's own recommended embed URL
+(per the client, 2026-09-12) — it strips the header photo and further
+descriptive text that the bare `/book/acorn-to-oak` page shows, leaving
+just the booking widget itself, which is what's wanted here since the page
+already has its own hero/description around the iframe. Prefer this URL
+over the bare one. The iframe approach itself is justified because the
+booking page's own response headers send
+`content-security-policy: frame-ancestors *` (checked 2026-09-08 via
+`curl -I`), i.e. they explicitly allow being framed from any origin.
+`<object>` was considered and rejected — wrong tool for embedding a full
+interactive HTML app (meant for PDFs/plugins, no `title`/`loading`
 equivalent, weaker accessibility).
-
-Known risk, not yet fully verified: the booking flow's later steps handle
-payment, and payment providers commonly refuse to render inside an iframe
-for security reasons regardless of forestschool.app's own CSP. If a client
-or family reports the booking flow breaking partway through (especially at
-a payment step), that's the likely cause — the "open in a new tab" link
-next to the iframe is the deliberate escape hatch for that case, not just
-decoration.
-
-If the client signs into their forestschool.app account and finds real
-embed/developer documentation, revisit this section against it — there may
-be an officially supported method (e.g. a resize-aware JS snippet) better
-than a bare iframe.
 
 ## Outstanding work
 
@@ -262,13 +252,6 @@ Still genuinely open (not part of the second-prompt brief):
 
   Swap the `href="#"` for the real profile URLs and drop the "(coming
   soon)" from the `aria-label`s at that point.
-- Confirmed safety/insurance/qualifications wording (`#safety` section,
-  currently generic placeholder, flagged on-page)
-- Deploy to the client's Namecheap host — the local `./deploy` script (see
-  "The `deploy` script" above) now automates the rebuild + upload, but it
-  still requires the user's own SSH authentication to actually run; do not
-  invoke it without them present. The exact remote path is deliberately
-  not documented in this repo (client instruction).
 
 ## Working conventions learned this project
 
